@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>slider</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+    body{
+        margin: 100px;
+    }
+    .animation_canvas  {
+        overflow:hidden;
+        position:relative;
+        width:600px; 
+        height:400px;
+    }
+
+    /* Slider Panel */
+    .slider_panel { width:3000px; position:relative; }
+    .slider_image { float:left; width:600px; height:400px; }
+
+    /* Control Panel */
+    .control_panel  {
+        position:absolute; 
+        bottom:10px;; 
+        left: 50%;
+        transform: translateX(-50%);
+        overflow:hidden; 
+        color:white;
+    }
+    .dot{
+        font-size:25px;
+        padding: 8px;
+        cursor:pointer;
+    }
+    .dot.active{
+        color:rgb(252, 91, 22);
+    }
+    #left-bar{
+        background-color: black;
+        opacity: 0.3;
+        position:absolute;
+        left:0px;
+        height:400px;
+        width: 100px;
+        transition:0.5s;
+    }
+    #right-bar{
+        background-color: black;
+        opacity: 0.3;
+        position:absolute;
+        right:0px;
+        height:400px;
+        width: 100px;
+        transition:0.5s;
+    }
+    #left-bar i{
+        position:absolute;
+        font-size:50px;
+        color:white;
+        left:50px;
+        top:170px;
+        cursor:pointer;
+    }
+    #right-bar i{
+        position:absolute;
+        font-size:50px;
+        color:white;
+        right:50px;
+        top:170px;
+        cursor:pointer;
+    }
+    #left-bar:hover{
+        opacity: 0.7;
+    }
+    #right-bar:hover{
+        opacity: 0.7;
+    }
+</style>
+
+    <script>
+        $(document).ready(function () {
+
+            // 슬라이더를 움직여주는 함수
+            let count=0;
+
+            function moveSlider(index){
+                var willMoveLeft = -(count * 600);
+                $('.slider_panel').animate({ left: willMoveLeft }, 'slow');
+                 
+            };
+
+            $(".dot").click(function(e){
+                $(".dot").removeClass("active");
+                $(this).addClass("active");
+                count=$(this).index();
+                moveSlider(count); //$(this)는 event가 발생한 자신을 가리킴.
+                
+            });
+            $("#left-bar").click(function(e){
+                count--;
+                if(count<0){
+                    count=4;
+                }
+                
+                $(".dot").removeClass("active").eq(count).addClass("active");
+                moveSlider(count);
+            });
+            $("#right-bar").click(function(e){
+                count++;
+                if(count==5){
+                    count=0;
+                }
+                
+                $(".dot").removeClass("active").eq(count).addClass("active");
+                moveSlider(count);
+            });
+
+        });
+    </script>
+</head>
+
+<body>
+
+   <div class="animation_canvas">
+        <div class="slider_panel">
+            <img src="img/pic1.png" class="slider_image"/>
+            <img src="img/pic2.jpg" class="slider_image"/>
+            <img src="img/pic3.jpg" class="slider_image"/>
+            <img src="img/pic4.jpg" class="slider_image"/>
+            <img src="img/pic5.jpg" class="slider_image"/>
+        </div>
+        
+        <div class="control_panel" style="text-align:center">
+          <span class="dot active" >☘</span> 
+          <span class="dot" >☘</span> 
+          <span class="dot" >☘</span> 
+          <span class="dot" >☘</span>
+            <span class="dot">☘</span>
+        </div>
+        <div id="left-bar"><i class="fa-solid fa-chevron-left"></i></div>
+        <div id="right-bar"><i class="fa-solid fa-chevron-right"></i></div>
+    </div>
+</body>
+
+</html>
